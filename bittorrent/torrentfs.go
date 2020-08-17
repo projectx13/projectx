@@ -9,11 +9,11 @@ import (
 	"path/filepath"
 	"time"
 
-	lt "github.com/ElementumOrg/libtorrent-go"
+	lt "github.com/projectxorg/libtorrent-go"
 	"github.com/anacrolix/missinggo/perf"
 
-	"github.com/elgatito/elementum/database"
-	"github.com/elgatito/elementum/util"
+	"github.com/projectx13/projectx/database"
+	"github.com/projectx13/projectx/util"
 )
 
 const (

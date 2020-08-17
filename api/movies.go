@@ -9,15 +9,15 @@ import (
 	"github.com/anacrolix/missinggo/perf"
 	"github.com/gin-gonic/gin"
 
-	"github.com/elgatito/elementum/bittorrent"
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/database"
-	"github.com/elgatito/elementum/library"
-	"github.com/elgatito/elementum/providers"
-	"github.com/elgatito/elementum/scrape"
-	"github.com/elgatito/elementum/tmdb"
-	"github.com/elgatito/elementum/trakt"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/bittorrent"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/database"
+	"github.com/projectx13/projectx/library"
+	"github.com/projectx13/projectx/providers"
+	"github.com/projectx13/projectx/scrape"
+	"github.com/projectx13/projectx/tmdb"
+	"github.com/projectx13/projectx/trakt"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 // Maps TMDB movie genre ids to slugs for images
@@ -170,7 +170,7 @@ func MovieCountries(ctx *gin.Context) {
 func MovieLibrary(ctx *gin.Context) {
 	defer perf.ScopeTimer()()
 
-	movies, err := xbmc.VideoLibraryGetElementumMovies()
+	movies, err := xbmc.VideoLibraryGetprojectxMovies()
 	if err != nil || movies == nil || movies.Limits == nil || movies.Limits.Total == 0 {
 		return
 	}
@@ -183,7 +183,7 @@ func MovieLibrary(ctx *gin.Context) {
 			continue
 		}
 
-		if id, err := strconv.Atoi(movies.Movies[i].UniqueIDs.Elementum); err == nil {
+		if id, err := strconv.Atoi(movies.Movies[i].UniqueIDs.projectx); err == nil {
 			m := tmdb.GetMovie(id, config.Get().Language)
 			if m != nil {
 				tmdbMovies = append(tmdbMovies, m)
@@ -480,7 +480,7 @@ func movieLinks(tmdbID string) []*bittorrent.TorrentFile {
 
 	searchers := providers.GetMovieSearchers()
 	if len(searchers) == 0 {
-		xbmc.Notify("Elementum", "LOCALIZE[30204]", config.AddonIcon())
+		xbmc.Notify("projectx", "LOCALIZE[30204]", config.AddonIcon())
 	}
 
 	return providers.SearchMovie(searchers, movie)
@@ -513,7 +513,7 @@ func MovieLinks(action string, s *bittorrent.Service) gin.HandlerFunc {
 		}
 
 		existingTorrent := s.HasTorrentByID(movie.ID)
-		if existingTorrent != nil && (config.Get().SilentStreamStart || xbmc.DialogConfirmFocused("Elementum", fmt.Sprintf("LOCALIZE[30608];;[COLOR gold]%s[/COLOR]", existingTorrent.Title()))) {
+		if existingTorrent != nil && (config.Get().SilentStreamStart || xbmc.DialogConfirmFocused("projectx", fmt.Sprintf("LOCALIZE[30608];;[COLOR gold]%s[/COLOR]", existingTorrent.Title()))) {
 			rURL := URLQuery(URLForXBMC(runAction),
 				"doresume", doresume,
 				"resume", existingTorrent.InfoHash(),
@@ -551,7 +551,7 @@ func MovieLinks(action string, s *bittorrent.Service) gin.HandlerFunc {
 		}
 
 		if len(torrents) == 0 {
-			xbmc.Notify("Elementum", "LOCALIZE[30205]", config.AddonIcon())
+			xbmc.Notify("projectx", "LOCALIZE[30205]", config.AddonIcon())
 			return
 		}
 

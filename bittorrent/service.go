@@ -27,16 +27,16 @@ import (
 	"github.com/shirou/gopsutil/mem"
 	"github.com/zeebo/bencode"
 
-	lt "github.com/ElementumOrg/libtorrent-go"
+	lt "github.com/projectxorg/libtorrent-go"
 
-	"github.com/elgatito/elementum/broadcast"
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/database"
-	"github.com/elgatito/elementum/diskusage"
-	"github.com/elgatito/elementum/proxy"
-	"github.com/elgatito/elementum/tmdb"
-	"github.com/elgatito/elementum/util"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/broadcast"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/database"
+	"github.com/projectx13/projectx/diskusage"
+	"github.com/projectx13/projectx/proxy"
+	"github.com/projectx13/projectx/tmdb"
+	"github.com/projectx13/projectx/util"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 // Service ...
@@ -607,7 +607,7 @@ func (s *Service) checkAvailableSpace(t *Torrent) bool {
 
 	if availableSpace < sizeLeft {
 		log.Errorf("Unsufficient free space on %s. Has %d, needs %d.", path, diskStatus.Free, sizeLeft)
-		xbmc.Notify("Elementum", "LOCALIZE[30207]", config.AddonIcon())
+		xbmc.Notify("projectx", "LOCALIZE[30207]", config.AddonIcon())
 
 		log.Infof("Pausing torrent %s", t.th.Status(uint(lt.WrappedTorrentHandleQueryName)).GetName())
 		t.Pause()
@@ -628,7 +628,7 @@ func (s *Service) AddTorrent(uri string, paused bool, downloadStorage int) (*Tor
 
 	if downloadStorage != StorageMemory && s.config.DownloadPath == "." {
 		log.Warningf("Cannot add torrent since download path is not set")
-		xbmc.Notify("Elementum", "LOCALIZE[30113]", config.AddonIcon())
+		xbmc.Notify("projectx", "LOCALIZE[30113]", config.AddonIcon())
 		return nil, fmt.Errorf("Download path empty")
 	}
 
@@ -791,7 +791,7 @@ func (s *Service) RemoveTorrent(t *Torrent, forceDrop, forceDelete, isWatched bo
 	keepDownloading := false
 	if forceDrop || configKeepDownloading == 2 || len(t.ChosenFiles) == 0 {
 		keepDownloading = false
-	} else if configKeepDownloading == 0 || xbmc.DialogConfirmFocused("Elementum", fmt.Sprintf("LOCALIZE[30146];;%s", t.Name())) {
+	} else if configKeepDownloading == 0 || xbmc.DialogConfirmFocused("projectx", fmt.Sprintf("LOCALIZE[30146];;%s", t.Name())) {
 		keepDownloading = true
 	}
 
@@ -806,7 +806,7 @@ func (s *Service) RemoveTorrent(t *Torrent, forceDrop, forceDelete, isWatched bo
 			deleteAnswer = true
 		} else if keepSetting == 0 {
 			deleteAnswer = false
-		} else if keepSetting == 2 || xbmc.DialogConfirm("Elementum", fmt.Sprintf("LOCALIZE[30269];;%s", t.Name())) {
+		} else if keepSetting == 2 || xbmc.DialogConfirm("projectx", fmt.Sprintf("LOCALIZE[30269];;%s", t.Name())) {
 			deleteAnswer = true
 		}
 	}
@@ -1450,10 +1450,10 @@ func (s *Service) downloadProgress() {
 				}
 				if !s.config.DisableBgProgress && (!s.config.DisableBgProgressPlayback || !s.anyPlayerIsPlaying()) {
 					if s.dialogProgressBG == nil {
-						s.dialogProgressBG = xbmc.NewDialogProgressBG("Elementum", "")
+						s.dialogProgressBG = xbmc.NewDialogProgressBG("projectx", "")
 					}
 					if s.dialogProgressBG != nil {
-						s.dialogProgressBG.Update(showProgress, "Elementum", showTorrent)
+						s.dialogProgressBG.Update(showProgress, "projectx", showTorrent)
 					}
 				}
 			} else if (!s.config.DisableBgProgress || (s.config.DisableBgProgressPlayback && s.anyPlayerIsPlaying())) && s.dialogProgressBG != nil {

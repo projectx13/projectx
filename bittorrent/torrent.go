@@ -18,7 +18,7 @@ import (
 	"time"
 	"unsafe"
 
-	lt "github.com/ElementumOrg/libtorrent-go"
+	lt "github.com/projectxorg/libtorrent-go"
 	"github.com/RoaringBitmap/roaring"
 	"github.com/anacrolix/missinggo/perf"
 	"github.com/anacrolix/missinggo/slices"
@@ -27,11 +27,11 @@ import (
 	"github.com/valyala/bytebufferpool"
 	"github.com/zeebo/bencode"
 
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/database"
-	"github.com/elgatito/elementum/tmdb"
-	"github.com/elgatito/elementum/util"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/database"
+	"github.com/projectx13/projectx/tmdb"
+	"github.com/projectx13/projectx/util"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 // Torrent ...
@@ -1469,7 +1469,7 @@ func (t *Torrent) WaitForMetadata(infoHash string) (err error) {
 	defer to.Stop()
 
 	log.Infof("Waiting for information fetched for torrent: %s", infoHash)
-	dialog := xbmc.NewDialogProgressBG("Elementum", "LOCALIZE[30583]", "LOCALIZE[30583]")
+	dialog := xbmc.NewDialogProgressBG("projectx", "LOCALIZE[30583]", "LOCALIZE[30583]")
 	defer func() {
 		if dialog != nil {
 			dialog.Close()
@@ -1601,7 +1601,7 @@ func (t *Torrent) GetCandidateFiles(btp *Player) ([]*CandidateFile, int, error) 
 		re := regexp.MustCompile(`(?i).*\.rar$`)
 		if re.MatchString(fileName) && size > 10*1024*1024 {
 			t.IsRarArchive = true
-			if !xbmc.DialogConfirm("Elementum", "LOCALIZE[30303]") {
+			if !xbmc.DialogConfirm("projectx", "LOCALIZE[30303]") {
 				if btp != nil {
 					btp.notEnoughSpace = true
 				}

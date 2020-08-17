@@ -4,10 +4,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/op/go-logging"
 
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/database"
-	"github.com/elgatito/elementum/library"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/database"
+	"github.com/projectx13/projectx/library"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 var cmdLog = logging.MustGetLogger("cmd")
@@ -25,7 +25,7 @@ func ClearCache(ctx *gin.Context) {
 	} else {
 		log.Debug("Removing all the cache")
 
-		if !xbmc.DialogConfirm("Elementum", "LOCALIZE[30471]") {
+		if !xbmc.DialogConfirm("projectx", "LOCALIZE[30471]") {
 			ctx.String(200, "")
 			return
 		}
@@ -33,7 +33,7 @@ func ClearCache(ctx *gin.Context) {
 		database.GetCache().RecreateBucket(database.CommonBucket)
 	}
 
-	xbmc.Notify("Elementum", "LOCALIZE[30200]", config.AddonIcon())
+	xbmc.Notify("projectx", "LOCALIZE[30200]", config.AddonIcon())
 }
 
 // ClearCacheTMDB ...
@@ -42,7 +42,7 @@ func ClearCacheTMDB(ctx *gin.Context) {
 
 	library.ClearTmdbCache()
 
-	xbmc.Notify("Elementum", "LOCALIZE[30200]", config.AddonIcon())
+	xbmc.Notify("projectx", "LOCALIZE[30200]", config.AddonIcon())
 }
 
 // ClearCacheTrakt ...
@@ -51,7 +51,7 @@ func ClearCacheTrakt(ctx *gin.Context) {
 
 	library.ClearTraktCache()
 
-	xbmc.Notify("Elementum", "LOCALIZE[30200]", config.AddonIcon())
+	xbmc.Notify("projectx", "LOCALIZE[30200]", config.AddonIcon())
 }
 
 // ClearPageCache ...
@@ -81,8 +81,8 @@ func ClearTmdbCache(ctx *gin.Context) {
 // ResetPath ...
 func ResetPath(ctx *gin.Context) {
 	xbmc.SetSetting("download_path", "")
-	xbmc.SetSetting("library_path", "special://temp/elementum_library/")
-	xbmc.SetSetting("torrents_path", "special://temp/elementum_torrents/")
+	xbmc.SetSetting("library_path", "special://temp/projectx_library/")
+	xbmc.SetSetting("torrents_path", "special://temp/projectx_torrents/")
 }
 
 // ResetCustomPath ...
@@ -131,7 +131,7 @@ func ClearDatabaseMovies(ctx *gin.Context) {
 
 	// database.Get().Exec("DELETE FROM library_items WHERE state = ? AND mediaType = ?", library.StateDeleted, library.MovieType)
 
-	xbmc.Notify("Elementum", "LOCALIZE[30472]", config.AddonIcon())
+	xbmc.Notify("projectx", "LOCALIZE[30472]", config.AddonIcon())
 
 	ctx.String(200, "")
 	return
@@ -144,7 +144,7 @@ func ClearDatabaseShows(ctx *gin.Context) {
 
 	// database.Get().Exec("DELETE FROM library_items WHERE state = ? AND mediaType = ?", library.StateDeleted, library.ShowType)
 
-	xbmc.Notify("Elementum", "LOCALIZE[30472]", config.AddonIcon())
+	xbmc.Notify("projectx", "LOCALIZE[30472]", config.AddonIcon())
 
 	ctx.String(200, "")
 	return
@@ -159,7 +159,7 @@ func ClearDatabaseTorrentHistory(ctx *gin.Context) {
 	database.GetStormDB().Drop(&database.TorrentAssignItem{})
 	database.GetStormDB().Drop(&database.TorrentHistory{})
 
-	xbmc.Notify("Elementum", "LOCALIZE[30472]", config.AddonIcon())
+	xbmc.Notify("projectx", "LOCALIZE[30472]", config.AddonIcon())
 
 	ctx.String(200, "")
 	return
@@ -172,7 +172,7 @@ func ClearDatabaseSearchHistory(ctx *gin.Context) {
 
 	database.GetStormDB().Drop(&database.QueryHistory{})
 
-	xbmc.Notify("Elementum", "LOCALIZE[30472]", config.AddonIcon())
+	xbmc.Notify("projectx", "LOCALIZE[30472]", config.AddonIcon())
 
 	ctx.String(200, "")
 	return
@@ -183,7 +183,7 @@ func ClearDatabaseSearchHistory(ctx *gin.Context) {
 func ClearDatabase(ctx *gin.Context) {
 	log.Debug("Removing all the database")
 
-	if !xbmc.DialogConfirm("Elementum", "LOCALIZE[30471]") {
+	if !xbmc.DialogConfirm("projectx", "LOCALIZE[30471]") {
 		ctx.String(200, "")
 		return
 	}
@@ -194,7 +194,7 @@ func ClearDatabase(ctx *gin.Context) {
 	database.GetStormDB().Drop(&database.TorrentAssignItem{})
 	database.GetStormDB().Drop(&database.QueryHistory{})
 
-	xbmc.Notify("Elementum", "LOCALIZE[30472]", config.AddonIcon())
+	xbmc.Notify("projectx", "LOCALIZE[30472]", config.AddonIcon())
 
 	ctx.String(200, "")
 	return

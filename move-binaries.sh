@@ -32,8 +32,8 @@ for file in *; do
 			ARCH="arm-7"
 		fi
 
-		echo "Moving '$file' to ${OS}_${ARCH}/elementum$EXT \n"
+		echo "Moving '$file' to ${OS}_${ARCH}/projectx$EXT \n"
 		mkdir -p ${OS}_${ARCH}
-		mv -f $file ${OS}_${ARCH}/elementum$EXT
+		mv -f $file ${OS}_${ARCH}/projectx$EXT
 	fi
 done

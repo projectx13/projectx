@@ -250,7 +250,7 @@ type UniqueIDs struct {
 	IMDB       string `json:"imdb"`
 	TheMovieDB string `json:"themoviedb"`
 	Trakt      string `json:"trakt"`
-	Elementum  string `json:"elementum"`
+	projectx  string `json:"projectx"`
 	Kodi       int
 }
 

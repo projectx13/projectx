@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 // Status represents library bool statuses

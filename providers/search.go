@@ -11,11 +11,11 @@ import (
 	"github.com/op/go-logging"
 	"github.com/zeebo/bencode"
 
-	"github.com/elgatito/elementum/bittorrent"
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/tmdb"
-	"github.com/elgatito/elementum/util"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/bittorrent"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/tmdb"
+	"github.com/projectx13/projectx/util"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 const (
@@ -222,7 +222,7 @@ func processLinks(torrentsChan chan *bittorrent.TorrentFile, sortType int, isSil
 
 	var dialogProgressBG *xbmc.DialogProgressBG
 	if !isSilent {
-		dialogProgressBG = xbmc.NewDialogProgressBG("Elementum", "LOCALIZE[30117]", "LOCALIZE[30117]", "LOCALIZE[30118]")
+		dialogProgressBG = xbmc.NewDialogProgressBG("projectx", "LOCALIZE[30117]", "LOCALIZE[30117]", "LOCALIZE[30118]")
 		go func() {
 			for {
 				select {
@@ -234,7 +234,7 @@ func processLinks(torrentsChan chan *bittorrent.TorrentFile, sortType int, isSil
 					}
 					if dialogProgressBG != nil {
 						if msg != "skip" {
-							dialogProgressBG.Update(progress*100/progressTotal, "Elementum", msg)
+							dialogProgressBG.Update(progress*100/progressTotal, "projectx", msg)
 						}
 					} else {
 						return
@@ -247,7 +247,7 @@ func processLinks(torrentsChan chan *bittorrent.TorrentFile, sortType int, isSil
 	wg.Wait()
 
 	if !isSilent {
-		dialogProgressBG.Update(100, "Elementum", "LOCALIZE[30117]")
+		dialogProgressBG.Update(100, "projectx", "LOCALIZE[30117]")
 	}
 
 	for _, torrent := range torrents {
@@ -327,7 +327,7 @@ func processLinks(torrentsChan chan *bittorrent.TorrentFile, sortType int, isSil
 	// progressTotal = len(trackers)*2 + 1
 	// progress = 0
 	// progressMsg := "LOCALIZE[30118]"
-	// dialogProgressBG.Update(progress*100/progressTotal, "Elementum", progressMsg)
+	// dialogProgressBG.Update(progress*100/progressTotal, "projectx", progressMsg)
 
 	// scrapeResults := make(chan []bittorrent.ScrapeResponseEntry, len(trackers))
 	// failedConnect := 0
@@ -390,7 +390,7 @@ func processLinks(torrentsChan chan *bittorrent.TorrentFile, sortType int, isSil
 	// 	log.Debug("Waiting for scrape from trackers")
 	// 	wg.Wait()
 
-	// 	dialogProgressBG.Update(100, "Elementum", progressMsg)
+	// 	dialogProgressBG.Update(100, "projectx", progressMsg)
 
 	// 	if failedConnect > 0 {
 	// 		log.Warningf("Failed to connect to %d tracker(s)", failedConnect)

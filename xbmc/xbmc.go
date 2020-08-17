@@ -74,8 +74,8 @@ func VideoLibraryGetMovies() (movies *VideoLibraryMovies, err error) {
 	return
 }
 
-// VideoLibraryGetElementumMovies ...
-func VideoLibraryGetElementumMovies() (movies *VideoLibraryMovies, err error) {
+// VideoLibraryGetprojectxMovies ...
+func VideoLibraryGetprojectxMovies() (movies *VideoLibraryMovies, err error) {
 	defer perf.ScopeTimer()()
 
 	list := []interface{}{
@@ -112,7 +112,7 @@ func VideoLibraryGetElementumMovies() (movies *VideoLibraryMovies, err error) {
 		Limits: &VideoLibraryLimits{},
 	}
 	for _, s := range movies.Movies {
-		if s != nil && s.UniqueIDs.Elementum != "" {
+		if s != nil && s.UniqueIDs.projectx != "" {
 			filteredMovies.Movies = append(filteredMovies.Movies, s)
 			total++
 		}
@@ -172,8 +172,8 @@ func VideoLibraryGetShows() (shows *VideoLibraryShows, err error) {
 	return
 }
 
-// VideoLibraryGetElementumShows returns shows added by Elementum
-func VideoLibraryGetElementumShows() (shows *VideoLibraryShows, err error) {
+// VideoLibraryGetprojectxShows returns shows added by projectx
+func VideoLibraryGetprojectxShows() (shows *VideoLibraryShows, err error) {
 	defer perf.ScopeTimer()()
 
 	list := []interface{}{
@@ -209,7 +209,7 @@ func VideoLibraryGetElementumShows() (shows *VideoLibraryShows, err error) {
 		Limits: &VideoLibraryLimits{},
 	}
 	for _, s := range shows.Shows {
-		if s != nil && s.UniqueIDs.Elementum != "" {
+		if s != nil && s.UniqueIDs.projectx != "" {
 			filteredShows.Shows = append(filteredShows.Shows, s)
 			total++
 		}

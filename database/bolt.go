@@ -14,9 +14,9 @@ import (
 	"github.com/anacrolix/missinggo/perf"
 	"github.com/boltdb/bolt"
 
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/util"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/util"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 // InitCacheDB ...
@@ -35,7 +35,7 @@ func InitCacheDB(conf *config.Configuration) (*BoltDatabase, error) {
 
 	for _, bucket := range CacheBuckets {
 		if err = cacheDatabase.CheckBucket(bucket); err != nil {
-			xbmc.Notify("Elementum", err.Error(), config.AddonIcon())
+			xbmc.Notify("projectx", err.Error(), config.AddonIcon())
 			log.Error(err)
 			return cacheDatabase, err
 		}

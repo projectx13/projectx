@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	lt "github.com/ElementumOrg/libtorrent-go"
+	lt "github.com/projectxorg/libtorrent-go"
 	"github.com/anacrolix/missinggo/perf"
 )
 

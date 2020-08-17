@@ -12,13 +12,13 @@ import (
 	"github.com/dustin/go-humanize"
 	"github.com/gin-gonic/gin"
 
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/database"
-	"github.com/elgatito/elementum/library"
-	"github.com/elgatito/elementum/proxy"
-	"github.com/elgatito/elementum/tmdb"
-	"github.com/elgatito/elementum/util"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/database"
+	"github.com/projectx13/projectx/library"
+	"github.com/projectx13/projectx/proxy"
+	"github.com/projectx13/projectx/tmdb"
+	"github.com/projectx13/projectx/util"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 // Changelog display
@@ -44,7 +44,7 @@ func Changelog(ctx *gin.Context) {
 
 // Donate display
 func Donate(ctx *gin.Context) {
-	xbmc.Dialog("Elementum", "LOCALIZE[30141]")
+	xbmc.Dialog("projectx", "LOCALIZE[30141]")
 	ctx.String(200, "")
 }
 
@@ -52,7 +52,7 @@ func Donate(ctx *gin.Context) {
 func Settings(ctx *gin.Context) {
 	addon := ctx.Params.ByName("addon")
 	if addon == "" {
-		addon = "plugin.video.elementum"
+		addon = "plugin.video.projectx"
 	}
 
 	xbmc.AddonSettings(addon)

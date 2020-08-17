@@ -6,9 +6,9 @@ import (
 	"github.com/anacrolix/missinggo/perf"
 	"github.com/gin-gonic/gin"
 
-	"github.com/elgatito/elementum/bittorrent"
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/bittorrent"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 func init() {
@@ -37,12 +37,12 @@ func Index(s *bittorrent.Service) gin.HandlerFunc {
 			{Label: "LOCALIZE[30355]", Path: URLForXBMC("/changelog"), Thumbnail: config.AddonResource("img", "faq8.png")},
 			{Label: "LOCALIZE[30393]", Path: URLForXBMC("/status"), Thumbnail: config.AddonResource("img", "clock.png")},
 			{Label: "LOCALIZE[30527]", Path: URLForXBMC("/donate"), Thumbnail: config.AddonResource("img", "faq8.png")},
-			{Label: "LOCALIZE[30579]", Path: URLForXBMC("/settings/plugin.video.elementum"), Thumbnail: config.AddonResource("img", "settings.png")},
+			{Label: "LOCALIZE[30579]", Path: URLForXBMC("/settings/plugin.video.projectx"), Thumbnail: config.AddonResource("img", "settings.png")},
 		}
 
 		// Adding Settings urls for each search provider found locally.
 		for _, addon := range getProviders() {
-			name := strings.Title(strings.ReplaceAll(addon.Name, "script.elementum.", ""))
+			name := strings.Title(strings.ReplaceAll(addon.Name, "script.projectx.", ""))
 
 			li = append(li, &xbmc.ListItem{Label: "LOCALIZE[30582];;" + name, Path: URLForXBMC("/settings/" + addon.ID), Thumbnail: config.AddonResource("img", "settings.png")})
 		}

@@ -7,10 +7,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/elgatito/elementum/bittorrent"
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/library"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/bittorrent"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/library"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 const (

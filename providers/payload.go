@@ -16,7 +16,7 @@ type SearchPayload struct {
 type GeneralSearchObject struct {
 	ProxyURL         string `json:"proxy_url"`
 	InternalProxyURL string `json:"internal_proxy_url"`
-	ElementumURL     string `json:"elementum_url"`
+	projectxURL     string `json:"projectx_url"`
 
 	Silent   bool `json:"silent"`
 	SkipAuth bool `json:"skip_auth"`

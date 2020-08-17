@@ -7,9 +7,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/util"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/util"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 func copyFile(from string, to string) error {
@@ -28,12 +28,12 @@ func copyFile(from string, to string) error {
 	return nil
 }
 
-// MakeElementumRepositoryAddon ...
-func MakeElementumRepositoryAddon() error {
-	addonID := "repository.elementum"
-	addonName := "Elementum Repository"
+// MakeprojectxRepositoryAddon ...
+func MakeprojectxRepositoryAddon() error {
+	addonID := "repository.projectx"
+	addonName := "projectx Repository"
 
-	elementumHost := fmt.Sprintf("http://%s:%d", config.Args.LocalHost, config.Args.LocalPort)
+	projectxHost := fmt.Sprintf("http://%s:%d", config.Args.LocalHost, config.Args.LocalPort)
 	addon := &xbmc.Addon{
 		ID:           addonID,
 		Name:         addonName,
@@ -44,12 +44,12 @@ func MakeElementumRepositoryAddon() error {
 				Point: "xbmc.addon.repository",
 				Name:  addonName,
 				Info: &xbmc.AddonRepositoryInfo{
-					Text:       elementumHost + "/repository/elgatito/plugin.video.elementum/addons.xml",
+					Text:       projectxHost + "/repository/elgatito/plugin.video.projectx/addons.xml",
 					Compressed: false,
 				},
-				Checksum: elementumHost + "/repository/elgatito/plugin.video.elementum/addons.xml.md5",
+				Checksum: projectxHost + "/repository/elgatito/plugin.video.projectx/addons.xml.md5",
 				Datadir: &xbmc.AddonRepositoryDataDir{
-					Text: elementumHost + "/repository/elgatito/",
+					Text: projectxHost + "/repository/elgatito/",
 					Zip:  true,
 				},
 			},
@@ -57,7 +57,7 @@ func MakeElementumRepositoryAddon() error {
 				Point: "xbmc.addon.metadata",
 				Summaries: []*xbmc.AddonText{
 					&xbmc.AddonText{
-						Text: "GitHub repository for Elementum updates",
+						Text: "GitHub repository for projectx updates",
 						Lang: "en",
 					},
 				},

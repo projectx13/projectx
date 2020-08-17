@@ -12,18 +12,18 @@ import (
 	"strings"
 	"time"
 
-	lt "github.com/ElementumOrg/libtorrent-go"
+	lt "github.com/projectxorg/libtorrent-go"
 
 	"github.com/anacrolix/missinggo/perf"
 	"github.com/dustin/go-humanize"
 	"github.com/gin-gonic/gin"
 	"github.com/op/go-logging"
 
-	"github.com/elgatito/elementum/bittorrent"
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/database"
-	"github.com/elgatito/elementum/util"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/bittorrent"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/database"
+	"github.com/projectx13/projectx/util"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 var (
@@ -98,7 +98,7 @@ func InTorrentsMap(tmdbID string) *bittorrent.TorrentFile {
 		torrent.LoadFromBytes(tm.Metadata)
 	}
 
-	if len(torrent.URI) > 0 && (config.Get().SilentStreamStart || xbmc.DialogConfirmFocused("Elementum", fmt.Sprintf("LOCALIZE[30260];;[COLOR gold]%s[/COLOR]", torrent.Title))) {
+	if len(torrent.URI) > 0 && (config.Get().SilentStreamStart || xbmc.DialogConfirmFocused("projectx", fmt.Sprintf("LOCALIZE[30260];;[COLOR gold]%s[/COLOR]", torrent.Title))) {
 		return torrent
 	}
 

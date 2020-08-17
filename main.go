@@ -17,16 +17,16 @@ import (
 	"github.com/anacrolix/tagflag"
 	"github.com/op/go-logging"
 
-	"github.com/elgatito/elementum/api"
-	"github.com/elgatito/elementum/bittorrent"
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/database"
-	"github.com/elgatito/elementum/library"
-	"github.com/elgatito/elementum/lockfile"
-	"github.com/elgatito/elementum/scrape"
-	"github.com/elgatito/elementum/trakt"
-	"github.com/elgatito/elementum/util"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/api"
+	"github.com/projectx13/projectx/bittorrent"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/database"
+	"github.com/projectx13/projectx/library"
+	"github.com/projectx13/projectx/lockfile"
+	"github.com/projectx13/projectx/scrape"
+	"github.com/projectx13/projectx/trakt"
+	"github.com/projectx13/projectx/util"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 var log = logging.MustGetLogger("main")
@@ -80,7 +80,7 @@ func main() {
 	))
 	logging.SetBackend(logging.NewLogBackend(ioutil.Discard, "", 0), logging.NewLogBackend(os.Stdout, "", 0))
 
-	log.Infof("Starting Elementum daemon")
+	log.Infof("Starting projectx daemon")
 	log.Infof("Version: %s LibTorrent: %s Go: %s, Threads: %d", util.GetVersion(), util.GetTorrentVersion(), runtime.Version(), runtime.GOMAXPROCS(0))
 
 	conf := config.Reload()
@@ -171,7 +171,7 @@ func main() {
 	}))
 
 	if config.Get().GreetingEnabled {
-		xbmc.Notify("Elementum", "LOCALIZE[30208]", config.AddonIcon())
+		xbmc.Notify("projectx", "LOCALIZE[30208]", config.AddonIcon())
 	}
 
 	sigc := make(chan os.Signal, 2)

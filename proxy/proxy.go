@@ -10,9 +10,9 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/elgatito/elementum/config"
+	"github.com/projectx13/projectx/config"
 
-	"github.com/ElementumOrg/cfbypass"
+	"github.com/projectxorg/cfbypass"
 	"github.com/elazarl/goproxy"
 	logging "github.com/op/go-logging"
 )

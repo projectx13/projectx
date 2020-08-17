@@ -17,9 +17,9 @@ import (
 	"time"
 
 	"github.com/anacrolix/missinggo/perf"
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/proxy"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/proxy"
+	"github.com/projectx13/projectx/xbmc"
 	"github.com/gin-gonic/gin"
 	"github.com/op/go-logging"
 )
@@ -119,8 +119,8 @@ type Release struct {
 }
 
 const (
-	githubUserContentURL    = "https://elementumorg.github.io/packages/%s/%s"
-	githubAltUserContentURL = "https://elementum.surge.sh/packages/%s/%s"
+	githubUserContentURL    = "https://projectxorg.github.io/packages/%s/%s"
+	githubAltUserContentURL = "https://projectx.surge.sh/packages/%s/%s"
 	githubLatestReleaseURL  = "https://api.github.com/repos/%s/%s/releases/latest"
 
 	releaseChangelog = "[B]%s[/B] - %s\n%s\n\n"
@@ -207,7 +207,7 @@ func getAddons(user string, repository string) (*xbmc.AddonList, error) {
 	defer perf.ScopeTimer()()
 	var addons []xbmc.Addon
 
-	for _, repo := range []string{"plugin.video.elementum", "script.elementum.burst", "context.elementum"} {
+	for _, repo := range []string{"plugin.video.projectx", "script.projectx.burst", "context.projectx"} {
 		addonXML, err := getAddonXML("elgatito", repo)
 		if err != nil {
 			continue
@@ -265,9 +265,9 @@ func GetAddonFiles(ctx *gin.Context) {
 		GetAddonsXML(ctx)
 		return
 	case "addons.xml.md5":
-		// go writeChangelog(user, "plugin.video.elementum")
-		// go writeChangelog(user, "script.elementum.burst")
-		// go writeChangelog(user, "context.elementum")
+		// go writeChangelog(user, "plugin.video.projectx")
+		// go writeChangelog(user, "script.projectx.burst")
+		// go writeChangelog(user, "context.projectx")
 		GetAddonsXMLChecksum(ctx)
 		return
 	case "fanart.jpg":

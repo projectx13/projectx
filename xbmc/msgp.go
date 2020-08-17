@@ -1772,9 +1772,9 @@ func (z *UniqueIDs) MarshalMsg(b []byte) (o []byte, err error) {
 	// string "Trakt"
 	o = append(o, 0xa5, 0x54, 0x72, 0x61, 0x6b, 0x74)
 	o = msgp.AppendString(o, z.Trakt)
-	// string "Elementum"
+	// string "projectx"
 	o = append(o, 0xa9, 0x45, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x75, 0x6d)
-	o = msgp.AppendString(o, z.Elementum)
+	o = msgp.AppendString(o, z.projectx)
 	// string "Kodi"
 	o = append(o, 0xa4, 0x4b, 0x6f, 0x64, 0x69)
 	o = msgp.AppendInt(o, z.Kodi)
@@ -1827,8 +1827,8 @@ func (z *UniqueIDs) UnmarshalMsg(bts []byte) (o []byte, err error) {
 			if err != nil {
 				return
 			}
-		case "Elementum":
-			z.Elementum, bts, err = msgp.ReadStringBytes(bts)
+		case "projectx":
+			z.projectx, bts, err = msgp.ReadStringBytes(bts)
 			if err != nil {
 				return
 			}
@@ -1850,7 +1850,7 @@ func (z *UniqueIDs) UnmarshalMsg(bts []byte) (o []byte, err error) {
 
 // Msgsize returns an upper bound estimate of the number of bytes occupied by the serialized message
 func (z *UniqueIDs) Msgsize() (s int) {
-	s = 1 + 8 + msgp.StringPrefixSize + len(z.Unknown) + 5 + msgp.StringPrefixSize + len(z.TMDB) + 5 + msgp.StringPrefixSize + len(z.TVDB) + 5 + msgp.StringPrefixSize + len(z.IMDB) + 11 + msgp.StringPrefixSize + len(z.TheMovieDB) + 6 + msgp.StringPrefixSize + len(z.Trakt) + 10 + msgp.StringPrefixSize + len(z.Elementum) + 5 + msgp.IntSize
+	s = 1 + 8 + msgp.StringPrefixSize + len(z.Unknown) + 5 + msgp.StringPrefixSize + len(z.TMDB) + 5 + msgp.StringPrefixSize + len(z.TVDB) + 5 + msgp.StringPrefixSize + len(z.IMDB) + 11 + msgp.StringPrefixSize + len(z.TheMovieDB) + 6 + msgp.StringPrefixSize + len(z.Trakt) + 10 + msgp.StringPrefixSize + len(z.projectx) + 5 + msgp.IntSize
 	return
 }
 

@@ -9,12 +9,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/elgatito/elementum/cache"
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/playcount"
-	"github.com/elgatito/elementum/tmdb"
-	"github.com/elgatito/elementum/util"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/cache"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/playcount"
+	"github.com/projectx13/projectx/tmdb"
+	"github.com/projectx13/projectx/util"
+	"github.com/projectx13/projectx/xbmc"
 	"github.com/jmcvetta/napping"
 )
 
@@ -114,7 +114,7 @@ func GetMovie(ID string) (movie *Movie) {
 
 		if err != nil {
 			log.Error(err)
-			xbmc.Notify("Elementum", fmt.Sprintf("Failed getting Trakt movie (%s), check your logs.", ID), config.AddonIcon())
+			xbmc.Notify("projectx", fmt.Sprintf("Failed getting Trakt movie (%s), check your logs.", ID), config.AddonIcon())
 		}
 
 		if err := resp.Unmarshal(&movie); err != nil {
@@ -139,7 +139,7 @@ func GetMovieByTMDB(tmdbID string) (movie *Movie) {
 		resp, err := Get(endPoint, params)
 		if err != nil {
 			log.Error(err)
-			xbmc.Notify("Elementum", "Failed getting Trakt movie using TMDB ID, check your logs.", config.AddonIcon())
+			xbmc.Notify("projectx", "Failed getting Trakt movie using TMDB ID, check your logs.", config.AddonIcon())
 			return
 		}
 
@@ -356,7 +356,7 @@ func CollectionMovies(isUpdateNeeded bool) (movies []*Movies, err error) {
 func Userlists() (lists []*List) {
 	traktUsername := config.Get().TraktUsername
 	if traktUsername == "" {
-		xbmc.Notify("Elementum", "LOCALIZE[30149]", config.AddonIcon())
+		xbmc.Notify("projectx", "LOCALIZE[30149]", config.AddonIcon())
 		return lists
 	}
 	endPoint := fmt.Sprintf("users/%s/lists", traktUsername)
@@ -373,13 +373,13 @@ func Userlists() (lists []*List) {
 	}
 
 	if err != nil {
-		xbmc.Notify("Elementum", err.Error(), config.AddonIcon())
+		xbmc.Notify("projectx", err.Error(), config.AddonIcon())
 		log.Error(err)
 		return lists
 	}
 	if resp.Status() != 200 {
 		errMsg := fmt.Sprintf("Bad status getting custom lists for %s: %d", traktUsername, resp.Status())
-		xbmc.Notify("Elementum", errMsg, config.AddonIcon())
+		xbmc.Notify("projectx", errMsg, config.AddonIcon())
 		log.Warningf(errMsg)
 		return lists
 	}
@@ -399,7 +399,7 @@ func Userlists() (lists []*List) {
 func Likedlists() (lists []*List) {
 	traktUsername := config.Get().TraktUsername
 	if traktUsername == "" {
-		xbmc.Notify("Elementum", "LOCALIZE[30149]", config.AddonIcon())
+		xbmc.Notify("projectx", "LOCALIZE[30149]", config.AddonIcon())
 		return lists
 	}
 	endPoint := "users/likes"
@@ -415,13 +415,13 @@ func Likedlists() (lists []*List) {
 	}
 
 	if err != nil {
-		xbmc.Notify("Elementum", err.Error(), config.AddonIcon())
+		xbmc.Notify("projectx", err.Error(), config.AddonIcon())
 		log.Error(err)
 		return lists
 	}
 	if resp.Status() != 200 {
 		errMsg := fmt.Sprintf("Bad status getting liked lists for %s: %d", traktUsername, resp.Status())
-		xbmc.Notify("Elementum", errMsg, config.AddonIcon())
+		xbmc.Notify("projectx", errMsg, config.AddonIcon())
 		log.Warningf(errMsg)
 		return lists
 	}
@@ -462,13 +462,13 @@ func TopLists(page string) (lists []*ListContainer, hasNext bool) {
 	}
 
 	if err != nil {
-		xbmc.Notify("Elementum", err.Error(), config.AddonIcon())
+		xbmc.Notify("projectx", err.Error(), config.AddonIcon())
 		log.Error(err)
 		return lists, hasNext
 	}
 	if resp.Status() != 200 {
 		errMsg := fmt.Sprintf("Bad status getting top lists: %d", resp.Status())
-		xbmc.Notify("Elementum", errMsg, config.AddonIcon())
+		xbmc.Notify("projectx", errMsg, config.AddonIcon())
 		log.Warningf(errMsg)
 		return lists, hasNext
 	}

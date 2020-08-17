@@ -8,11 +8,11 @@ import (
 	"github.com/anacrolix/missinggo/perf"
 	"github.com/gin-gonic/gin"
 
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/xbmc"
 )
 
-const providerPrefix = "plugin://plugin.video.elementum/provider/"
+const providerPrefix = "plugin://plugin.video.projectx/provider/"
 
 // Addon ...
 type Addon struct {
@@ -42,7 +42,7 @@ func getProviders() []Addon {
 
 	list := make([]Addon, 0)
 	for _, addon := range xbmc.GetAddons("xbmc.python.script", "executable", "all", []string{"name", "version", "enabled"}).Addons {
-		if strings.HasPrefix(addon.ID, "script.elementum.") {
+		if strings.HasPrefix(addon.ID, "script.projectx.") {
 			list = append(list, Addon{
 				ID:      addon.ID,
 				Name:    addon.Name,
@@ -113,7 +113,7 @@ func ProviderCheck(ctx *gin.Context) {
 	addonID := ctx.Params.ByName("provider")
 	failures := xbmc.AddonCheck(addonID)
 	translated := xbmc.GetLocalizedString(30243)
-	xbmc.Notify("Elementum", fmt.Sprintf("%s: %d", translated, failures), config.AddonIcon())
+	xbmc.Notify("projectx", fmt.Sprintf("%s: %d", translated, failures), config.AddonIcon())
 	ctx.String(200, "")
 }
 

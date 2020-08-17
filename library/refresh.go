@@ -15,17 +15,17 @@ import (
 	"github.com/cespare/xxhash"
 	"github.com/karrick/godirwalk"
 
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/playcount"
-	"github.com/elgatito/elementum/tmdb"
-	"github.com/elgatito/elementum/trakt"
-	"github.com/elgatito/elementum/util"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/playcount"
+	"github.com/projectx13/projectx/tmdb"
+	"github.com/projectx13/projectx/trakt"
+	"github.com/projectx13/projectx/util"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 var (
-	movieRegexp = regexp.MustCompile(`^plugin://plugin.video.elementum.*/movie/\w+/(\d+)`)
-	showRegexp  = regexp.MustCompile(`^plugin://plugin.video.elementum.*/show/\w+/(\d+)/(\d+)/(\d+)`)
+	movieRegexp = regexp.MustCompile(`^plugin://plugin.video.projectx.*/movie/\w+/(\d+)`)
+	showRegexp  = regexp.MustCompile(`^plugin://plugin.video.projectx.*/show/\w+/(\d+)/(\d+)/(\d+)`)
 )
 
 // RefreshOnScan is launched when scan is finished
@@ -395,7 +395,7 @@ func RefreshMovie(kodiID, action int) {
 
 		if action == ActionDelete {
 			if _, err := RemoveMovie(uids.TMDB); err != nil {
-				log.Warning("Nothing left to remove from Elementum")
+				log.Warning("Nothing left to remove from projectx")
 			}
 		}
 
@@ -430,7 +430,7 @@ func RefreshShow(kodiID, action int) {
 		if action == ActionDelete {
 			id := strconv.Itoa(uids.TMDB)
 			if _, err := RemoveShow(id); err != nil {
-				log.Warning("Nothing left to remove from Elementum")
+				log.Warning("Nothing left to remove from projectx")
 			}
 		}
 

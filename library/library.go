@@ -17,13 +17,13 @@ import (
 	"github.com/asdine/storm/q"
 	"github.com/op/go-logging"
 
-	"github.com/elgatito/elementum/cache"
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/database"
-	"github.com/elgatito/elementum/tmdb"
-	"github.com/elgatito/elementum/trakt"
-	"github.com/elgatito/elementum/util"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/cache"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/database"
+	"github.com/projectx13/projectx/tmdb"
+	"github.com/projectx13/projectx/trakt"
+	"github.com/projectx13/projectx/util"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 const (
@@ -105,7 +105,7 @@ var (
 
 	initialized = false
 
-	resolveRegexp = regexp.MustCompile(`^plugin://plugin.video.elementum.*?(\d+)(\W|$)`)
+	resolveRegexp = regexp.MustCompile(`^plugin://plugin.video.projectx.*?(\d+)(\W|$)`)
 
 	pendingShows = []int{}
 )
@@ -133,11 +133,11 @@ func Init() {
 	InitDB()
 
 	if err := checkMoviesPath(); err != nil {
-		xbmc.Notify("Elementum", err.Error(), config.AddonIcon())
+		xbmc.Notify("projectx", err.Error(), config.AddonIcon())
 		return
 	}
 	if err := checkShowsPath(); err != nil {
-		xbmc.Notify("Elementum", err.Error(), config.AddonIcon())
+		xbmc.Notify("projectx", err.Error(), config.AddonIcon())
 		return
 	}
 
@@ -209,7 +209,7 @@ func Init() {
 					}
 					if len(labels) > 0 {
 						label = strings.Join(labels, ", ")
-						if xbmc.DialogConfirmFocused("Elementum", fmt.Sprintf("LOCALIZE[30278];;%s", label)) {
+						if xbmc.DialogConfirmFocused("projectx", fmt.Sprintf("LOCALIZE[30278];;%s", label)) {
 							xbmc.VideoLibraryClean()
 						}
 					}
@@ -220,7 +220,7 @@ func Init() {
 							log.Error(err)
 						}
 					}
-					if xbmc.DialogConfirmFocused("Elementum", fmt.Sprintf("LOCALIZE[30278];;%s", label)) {
+					if xbmc.DialogConfirmFocused("projectx", fmt.Sprintf("LOCALIZE[30278];;%s", label)) {
 						xbmc.VideoLibraryClean()
 					}
 				}
@@ -239,7 +239,7 @@ func Init() {
 	updateDelay := config.Get().UpdateDelay
 	if updateDelay > 0 {
 		if updateDelay < 10 {
-			// Give time to Elementum to update its cache of libraryMovies, libraryShows and libraryEpisodes
+			// Give time to projectx to update its cache of libraryMovies, libraryShows and libraryEpisodes
 			updateDelay = 10
 		}
 		go func() {
@@ -260,7 +260,7 @@ func Init() {
 	go func() {
 		time.Sleep(30 * time.Second)
 		if !tmdb.WarmingUp.IsSet() {
-			xbmc.Notify("Elementum", "LOCALIZE[30147]", config.AddonIcon())
+			xbmc.Notify("projectx", "LOCALIZE[30147]", config.AddonIcon())
 		}
 	}()
 
@@ -278,7 +278,7 @@ func Init() {
 	tmdb.WarmingUp.Set()
 	took := time.Since(started)
 	if took.Seconds() > 30 {
-		xbmc.Notify("Elementum", "LOCALIZE[30148]", config.AddonIcon())
+		xbmc.Notify("projectx", "LOCALIZE[30148]", config.AddonIcon())
 	}
 	log.Noticef("Caches warmed up in %s", took)
 
@@ -333,11 +333,11 @@ func Init() {
 
 			infoHash := ""
 			for _, item := range items {
-				// Remove from Elementum's library to prevent duplicates
+				// Remove from projectx's library to prevent duplicates
 				if item.Type == movieType {
 					if IsDuplicateMovie(strconv.Itoa(item.ID)) {
 						if _, err := RemoveMovie(item.ID); err != nil {
-							log.Warning("Nothing left to remove from Elementum")
+							log.Warning("Nothing left to remove from projectx")
 						}
 					}
 				} else {
@@ -505,7 +505,7 @@ func writeMovieNFO(m *tmdb.Movie, p string) error {
 	out := `<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <movie>
 	<uniqueid type="unknown" default="false">%v</uniqueid>
-	<uniqueid type="elementum" default="false">%v</uniqueid>
+	<uniqueid type="projectx" default="false">%v</uniqueid>
 	<uniqueid type="tmdb" default="true">%v</uniqueid>
 	<uniqueid type="imdb" default="false">%v</uniqueid>
 	<uniqueid type="tvdb" default="false">%v</uniqueid>
@@ -633,7 +633,7 @@ func writeShowNFO(s *tmdb.Show, p string) error {
 	out := `<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <tvshow>
 	<uniqueid type="unknown" default="false">%v</uniqueid>
-	<uniqueid type="elementum" default="false">%v</uniqueid>
+	<uniqueid type="projectx" default="false">%v</uniqueid>
 	<uniqueid type="tmdb" default="true">%v</uniqueid>
 	<uniqueid type="imdb" default="false">%v</uniqueid>
 	<uniqueid type="tvdb" default="false">%v</uniqueid>
@@ -792,7 +792,7 @@ func RemoveEpisode(tmdbID int, showID int, seasonNumber int, episodeNumber int) 
 	if !alreadyRemoved {
 		log.Noticef("%s removed from library", episodeStrm)
 	} else {
-		return errors.New("Nothing left to remove from Elementum")
+		return errors.New("Nothing left to remove from projectx")
 	}
 
 	return nil
@@ -1137,7 +1137,7 @@ func SyncMoviesList(listID string, updating bool, isUpdateNeeded bool) (err erro
 
 	if !updating && len(movieIDs) > 0 {
 		log.Noticef("Movies list (%s) added", listID)
-		if config.Get().LibraryUpdate == 0 || (config.Get().LibraryUpdate == 1 && xbmc.DialogConfirmFocused("Elementum", fmt.Sprintf("LOCALIZE[30277];;%s", label))) {
+		if config.Get().LibraryUpdate == 0 || (config.Get().LibraryUpdate == 1 && xbmc.DialogConfirmFocused("projectx", fmt.Sprintf("LOCALIZE[30277];;%s", label))) {
 			xbmc.VideoLibraryScan()
 		}
 	}
@@ -1266,7 +1266,7 @@ func SyncShowsList(listID string, updating bool, isUpdateNeeded bool) (err error
 
 	if !updating && len(showIDs) > 0 {
 		log.Noticef("Shows list (%s) added", listID)
-		if config.Get().LibraryUpdate == 0 || (config.Get().LibraryUpdate == 1 && xbmc.DialogConfirmFocused("Elementum", fmt.Sprintf("LOCALIZE[30277];;%s", label))) {
+		if config.Get().LibraryUpdate == 0 || (config.Get().LibraryUpdate == 1 && xbmc.DialogConfirmFocused("projectx", fmt.Sprintf("LOCALIZE[30277];;%s", label))) {
 			xbmc.VideoLibraryScan()
 		}
 	}
@@ -1311,7 +1311,7 @@ func AddMovie(tmdbID string, force bool) (*tmdb.Movie, error) {
 	}
 
 	if !force && IsDuplicateMovie(tmdbID) {
-		xbmc.Notify("Elementum", fmt.Sprintf("LOCALIZE[30287];;%s", movie.Title), config.AddonIcon())
+		xbmc.Notify("projectx", fmt.Sprintf("LOCALIZE[30287];;%s", movie.Title), config.AddonIcon())
 		return nil, fmt.Errorf("Movie already added")
 	}
 
@@ -1338,7 +1338,7 @@ func AddShow(tmdbID string, force bool) (*tmdb.Show, error) {
 	show := tmdb.GetShowByID(tmdbID, config.Get().Language)
 
 	if !force && IsDuplicateShow(tmdbID) {
-		xbmc.Notify("Elementum", fmt.Sprintf("LOCALIZE[30287];;%s", show.Name), config.AddonIcon())
+		xbmc.Notify("projectx", fmt.Sprintf("LOCALIZE[30287];;%s", show.Name), config.AddonIcon())
 		return show, fmt.Errorf("Show already added")
 	}
 

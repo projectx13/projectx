@@ -14,7 +14,7 @@ import (
 
 	bolt "go.etcd.io/bbolt"
 
-	"github.com/elgatito/elementum/config"
+	"github.com/projectx13/projectx/config"
 )
 
 // GetStorm returns common database

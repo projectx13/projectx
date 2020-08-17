@@ -10,8 +10,8 @@ import (
 
 	"github.com/anacrolix/missinggo/perf"
 
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 // DebugAll ...

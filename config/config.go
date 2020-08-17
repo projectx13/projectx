@@ -14,7 +14,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/xbmc"
 
 	"github.com/dustin/go-humanize"
 	"github.com/op/go-logging"
@@ -306,8 +306,8 @@ func Reload() *Configuration {
 				message = settingsWarning
 			}
 
-			xbmc.AddonSettings("plugin.video.elementum")
-			xbmc.Dialog("Elementum", message)
+			xbmc.AddonSettings("plugin.video.projectx")
+			xbmc.Dialog("projectx", message)
 
 			waitForSettingsClosed()
 
@@ -327,7 +327,7 @@ func Reload() *Configuration {
 	info.Profile = xbmc.TranslatePath(info.Profile)
 	info.Home = xbmc.TranslatePath(info.Home)
 	info.Xbmc = xbmc.TranslatePath(info.Xbmc)
-	info.TempPath = filepath.Join(xbmc.TranslatePath("special://temp"), "elementum")
+	info.TempPath = filepath.Join(xbmc.TranslatePath("special://temp"), "projectx")
 
 	platform := xbmc.GetPlatform()
 
@@ -408,7 +408,7 @@ func Reload() *Configuration {
 		log.Errorf("Cannot use library location '%s'", libraryPath)
 		settingsWarning = "LOCALIZE[30220]"
 		panic(settingsWarning)
-	} else if strings.Contains(libraryPath, "elementum_library") {
+	} else if strings.Contains(libraryPath, "projectx_library") {
 		if err := os.MkdirAll(libraryPath, 0777); err != nil {
 			log.Errorf("Could not create temporary library directory: %#v", err)
 			settingsWarning = err.Error()
@@ -424,7 +424,7 @@ func Reload() *Configuration {
 
 	if torrentsPath == "." {
 		torrentsPath = filepath.Join(downloadPath, "Torrents")
-	} else if strings.Contains(torrentsPath, "elementum_torrents") {
+	} else if strings.Contains(torrentsPath, "projectx_torrents") {
 		if err := os.MkdirAll(torrentsPath, 0777); err != nil {
 			log.Errorf("Could not create temporary torrents directory: %#v", err)
 			settingsWarning = err.Error()
@@ -747,7 +747,7 @@ func Reload() *Configuration {
 	}
 
 	// Reading Kodi's advancedsettings file for MemorySize variable to avoid waiting for playback
-	// after Elementum's buffer is finished.
+	// after projectx's buffer is finished.
 	newConfig.KodiBufferSize = getKodiBufferSize()
 	if newConfig.AutoKodiBufferSize && newConfig.KodiBufferSize > newConfig.BufferSize {
 		newConfig.BufferSize = newConfig.KodiBufferSize
@@ -886,9 +886,9 @@ func waitForSettingsClosed() {
 
 // CheckBurst ...
 func CheckBurst() {
-	// Check for enabled providers and Elementum Burst
+	// Check for enabled providers and projectx Burst
 	for _, addon := range xbmc.GetAddons("xbmc.python.script", "executable", "all", []string{"name", "version", "enabled"}).Addons {
-		if strings.HasPrefix(addon.ID, "script.elementum.") {
+		if strings.HasPrefix(addon.ID, "script.projectx.") {
 			if addon.Enabled == true {
 				return
 			}
@@ -900,17 +900,17 @@ func CheckBurst() {
 	xbmc.UpdateLocalAddons()
 	xbmc.UpdateAddonRepos()
 
-	if !Get().SkipBurstSearch && xbmc.DialogConfirmFocused("Elementum", "LOCALIZE[30271]") {
-		log.Infof("Triggering Kodi to check for script.elementum.burst plugin")
-		xbmc.PlayURL("plugin://script.elementum.burst/")
+	if !Get().SkipBurstSearch && xbmc.DialogConfirmFocused("projectx", "LOCALIZE[30271]") {
+		log.Infof("Triggering Kodi to check for script.projectx.burst plugin")
+		xbmc.PlayURL("plugin://script.projectx.burst/")
 		time.Sleep(15 * time.Second)
 
-		log.Infof("Checking for existence of script.elementum.burst plugin now")
-		if xbmc.IsAddonInstalled("script.elementum.burst") {
-			xbmc.SetAddonEnabled("script.elementum.burst", true)
-			xbmc.Notify("Elementum", "LOCALIZE[30272]", AddonIcon())
+		log.Infof("Checking for existence of script.projectx.burst plugin now")
+		if xbmc.IsAddonInstalled("script.projectx.burst") {
+			xbmc.SetAddonEnabled("script.projectx.burst", true)
+			xbmc.Notify("projectx", "LOCALIZE[30272]", AddonIcon())
 		} else {
-			xbmc.Dialog("Elementum", "LOCALIZE[30273]")
+			xbmc.Dialog("projectx", "LOCALIZE[30273]")
 		}
 	}
 }

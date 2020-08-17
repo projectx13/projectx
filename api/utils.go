@@ -5,9 +5,9 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/util"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/util"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 // type contextMenu []*contextMenuItem

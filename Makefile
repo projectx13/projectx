@@ -64,9 +64,9 @@ else ifeq ($(TARGET_OS), android)
 	CXX := $(CROSS_ROOT)/bin/$(CROSS_TRIPLE)-clang++
 endif
 
-PROJECT = elementumorg
-NAME = elementum
-GO_PKG = github.com/elgatito/elementum
+PROJECT = projectxorg
+NAME = projectx
+GO_PKG = github.com/projectx13/projectx
 GO = go
 GIT = git
 DOCKER = docker
@@ -76,7 +76,7 @@ GIT_VERSION = $(shell $(GIT) describe --tags)
 CGO_ENABLED = 1
 OUTPUT_NAME = $(NAME)$(EXT)
 BUILD_PATH = build/$(TARGET_OS)_$(TARGET_ARCH)
-LIBTORRENT_GO = github.com/ElementumOrg/libtorrent-go
+LIBTORRENT_GO = github.com/projectxorg/libtorrent-go
 LIBTORRENT_GO_HOME = $(shell go env GOPATH)/src/$(LIBTORRENT_GO)
 GO_BUILD_TAGS =
 GO_LDFLAGS += -s -w -X $(GO_PKG)/util.Version=$(GIT_VERSION)
@@ -150,7 +150,7 @@ vendor_libs_android:
 	$(CROSS_ROOT)/sysroot/usr/lib/$(CROSS_TRIPLE)/libc++_shared.so
 	# $(CROSS_ROOT)/$(CROSS_TRIPLE)/lib/libgnustl_shared.so
 
-elementum: $(BUILD_PATH)/$(OUTPUT_NAME)
+projectx: $(BUILD_PATH)/$(OUTPUT_NAME)
 
 re: clean build
 
@@ -192,17 +192,17 @@ checksum: $(BUILD_PATH)/$(OUTPUT_NAME)
 	shasum -b $(BUILD_PATH)/$(OUTPUT_NAME) | cut -d' ' -f1 >> $(BUILD_PATH)/$(OUTPUT_NAME)
 
 ifeq ($(TARGET_ARCH), arm)
-dist: elementum vendor_$(TARGET_OS) strip checksum
+dist: projectx vendor_$(TARGET_OS) strip checksum
 else ifeq ($(TARGET_ARCH), armv6)
-dist: elementum vendor_$(TARGET_OS) strip checksum
+dist: projectx vendor_$(TARGET_OS) strip checksum
 else ifeq ($(TARGET_ARCH), armv7)
-dist: elementum vendor_$(TARGET_OS) strip checksum
+dist: projectx vendor_$(TARGET_OS) strip checksum
 else ifeq ($(TARGET_ARCH), arm64)
-dist: elementum vendor_$(TARGET_OS) strip checksum
+dist: projectx vendor_$(TARGET_OS) strip checksum
 else ifeq ($(TARGET_OS), darwin)
-dist: elementum vendor_$(TARGET_OS) strip checksum
+dist: projectx vendor_$(TARGET_OS) strip checksum
 else
-dist: elementum vendor_$(TARGET_OS) strip checksum
+dist: projectx vendor_$(TARGET_OS) strip checksum
 endif
 
 libs: force
@@ -210,7 +210,7 @@ libs: force
 
 binaries:
 	git config --global push.default simple
-	git clone --depth=1 https://github.com/elgatito/elementum-binaries binaries
+	git clone --depth=1 https://github.com/projectx13/projectx-binaries binaries
 	cp -Rf build/* binaries/
 	cd binaries && git add * && git commit -m "Update to ${GIT_VERSION}"
 

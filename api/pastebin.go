@@ -10,8 +10,8 @@ import (
 	"os/user"
 
 	humanize "github.com/dustin/go-humanize"
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/xbmc"
 	"github.com/gin-gonic/gin"
 )
 
@@ -75,9 +75,9 @@ var pasteProjects = []PasteProject{
 
 // Pastebin uploads /debug/:type to pastebin
 func Pastebin(ctx *gin.Context) {
-	dialog := xbmc.NewDialogProgressBG("Elementum", "LOCALIZE[30457]", "LOCALIZE[30457]")
+	dialog := xbmc.NewDialogProgressBG("projectx", "LOCALIZE[30457]", "LOCALIZE[30457]")
 	if dialog != nil {
-		dialog.Update(0, "Elementum", "LOCALIZE[30457]")
+		dialog.Update(0, "projectx", "LOCALIZE[30457]")
 	}
 	pasteURL := ""
 	defer func() {
@@ -86,7 +86,7 @@ func Pastebin(ctx *gin.Context) {
 		}
 
 		if pasteURL != "" {
-			xbmc.Dialog("Elementum", "LOCALIZE[30454];;"+pasteURL)
+			xbmc.Dialog("projectx", "LOCALIZE[30454];;"+pasteURL)
 		}
 	}()
 
@@ -104,13 +104,13 @@ func Pastebin(ctx *gin.Context) {
 	// u, err := user.Current()
 	// if err != nil {
 	// 	u = &user.User{
-	// 		Name:     "Elementum Uploader",
-	// 		Username: "Elementum Uploader",
+	// 		Name:     "projectx Uploader",
+	// 		Username: "projectx Uploader",
 	// 	}
 	// }
 	u := &user.User{
-		Name:     "Elementum Uploader",
-		Username: "Elementum Uploader",
+		Name:     "projectx Uploader",
+		Username: "projectx Uploader",
 	}
 
 	for _, p := range pasteProjects {

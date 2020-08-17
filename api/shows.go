@@ -10,14 +10,14 @@ import (
 	"github.com/anacrolix/missinggo/perf"
 	"github.com/gin-gonic/gin"
 
-	"github.com/elgatito/elementum/bittorrent"
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/database"
-	"github.com/elgatito/elementum/library"
-	"github.com/elgatito/elementum/providers"
-	"github.com/elgatito/elementum/tmdb"
-	"github.com/elgatito/elementum/trakt"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/bittorrent"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/database"
+	"github.com/projectx13/projectx/library"
+	"github.com/projectx13/projectx/providers"
+	"github.com/projectx13/projectx/tmdb"
+	"github.com/projectx13/projectx/trakt"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 // TVIndex ...
@@ -142,7 +142,7 @@ func TVCountries(ctx *gin.Context) {
 func TVLibrary(ctx *gin.Context) {
 	defer perf.ScopeTimer()()
 
-	shows, err := xbmc.VideoLibraryGetElementumShows()
+	shows, err := xbmc.VideoLibraryGetprojectxShows()
 	if err != nil || shows == nil || shows.Limits == nil || shows.Limits.Total == 0 {
 		return
 	}
@@ -155,7 +155,7 @@ func TVLibrary(ctx *gin.Context) {
 			continue
 		}
 
-		if id, err := strconv.Atoi(shows.Shows[i].UniqueIDs.Elementum); err == nil {
+		if id, err := strconv.Atoi(shows.Shows[i].UniqueIDs.projectx); err == nil {
 			s := tmdb.GetShow(id, config.Get().Language)
 			if s != nil {
 				tmdbShows = append(tmdbShows, s)
@@ -523,7 +523,7 @@ func showSeasonLinks(showID int, seasonNumber int) ([]*bittorrent.TorrentFile, e
 
 	searchers := providers.GetSeasonSearchers()
 	if len(searchers) == 0 {
-		xbmc.Notify("Elementum", "LOCALIZE[30204]", config.AddonIcon())
+		xbmc.Notify("projectx", "LOCALIZE[30204]", config.AddonIcon())
 	}
 
 	return providers.SearchSeason(searchers, show, season), nil
@@ -575,7 +575,7 @@ func ShowSeasonLinks(action string, s *bittorrent.Service) gin.HandlerFunc {
 		longName := fmt.Sprintf("%s Season %02d", show.Name, seasonNumber)
 
 		existingTorrent := s.HasTorrentBySeason(showID, seasonNumber)
-		if existingTorrent != nil && (config.Get().SilentStreamStart || xbmc.DialogConfirmFocused("Elementum", fmt.Sprintf("LOCALIZE[30608];;[COLOR gold]%s[/COLOR]", existingTorrent.Title()))) {
+		if existingTorrent != nil && (config.Get().SilentStreamStart || xbmc.DialogConfirmFocused("projectx", fmt.Sprintf("LOCALIZE[30608];;[COLOR gold]%s[/COLOR]", existingTorrent.Title()))) {
 			rURL := URLQuery(URLForXBMC(runAction),
 				"doresume", doresume,
 				"resume", existingTorrent.InfoHash(),
@@ -626,7 +626,7 @@ func ShowSeasonLinks(action string, s *bittorrent.Service) gin.HandlerFunc {
 		}
 
 		if len(torrents) == 0 {
-			xbmc.Notify("Elementum", "LOCALIZE[30205]", config.AddonIcon())
+			xbmc.Notify("projectx", "LOCALIZE[30205]", config.AddonIcon())
 			return
 		}
 
@@ -717,7 +717,7 @@ func showEpisodeLinks(showID int, seasonNumber int, episodeNumber int) ([]*bitto
 
 	searchers := providers.GetEpisodeSearchers()
 	if len(searchers) == 0 {
-		xbmc.Notify("Elementum", "LOCALIZE[30204]", config.AddonIcon())
+		xbmc.Notify("projectx", "LOCALIZE[30204]", config.AddonIcon())
 	}
 
 	return providers.SearchEpisode(searchers, show, episode), nil
@@ -762,7 +762,7 @@ func ShowEpisodeLinks(action string, s *bittorrent.Service) gin.HandlerFunc {
 		longName := fmt.Sprintf("%s S%02dE%02d", show.Name, seasonNumber, episodeNumber)
 
 		existingTorrent := s.HasTorrentByEpisode(showID, seasonNumber, episodeNumber)
-		if existingTorrent != nil && (config.Get().SilentStreamStart || (existingTorrent.IsNextFile && config.Get().SmartEpisodeChoose) || xbmc.DialogConfirmFocused("Elementum", fmt.Sprintf("LOCALIZE[30608];;[COLOR gold]%s[/COLOR]", existingTorrent.Title()))) {
+		if existingTorrent != nil && (config.Get().SilentStreamStart || (existingTorrent.IsNextFile && config.Get().SmartEpisodeChoose) || xbmc.DialogConfirmFocused("projectx", fmt.Sprintf("LOCALIZE[30608];;[COLOR gold]%s[/COLOR]", existingTorrent.Title()))) {
 			rURL := URLQuery(URLForXBMC(runAction),
 				"doresume", doresume,
 				"resume", existingTorrent.InfoHash(),
@@ -812,7 +812,7 @@ func ShowEpisodeLinks(action string, s *bittorrent.Service) gin.HandlerFunc {
 		}
 
 		if len(torrents) == 0 {
-			xbmc.Notify("Elementum", "LOCALIZE[30205]", config.AddonIcon())
+			xbmc.Notify("projectx", "LOCALIZE[30205]", config.AddonIcon())
 			return
 		}
 

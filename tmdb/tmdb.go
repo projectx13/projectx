@@ -7,10 +7,10 @@ import (
 	"sort"
 	"time"
 
-	"github.com/elgatito/elementum/cache"
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/util"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/cache"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/util"
+	"github.com/projectx13/projectx/xbmc"
 	"github.com/jmcvetta/napping"
 	"github.com/op/go-logging"
 )
@@ -436,7 +436,7 @@ func tmdbCheck(key string) bool {
 
 	if err != nil {
 		log.Error(err.Error())
-		xbmc.Notify("Elementum", "TMDB check failed, check your logs.", config.AddonIcon())
+		xbmc.Notify("projectx", "TMDB check failed, check your logs.", config.AddonIcon())
 		return false
 	} else if resp.Status() != 200 {
 		return false
@@ -480,11 +480,11 @@ func ImageURL(uri string, size string) string {
 // 				)
 // 				if err != nil {
 // 					log.Error(err.Error())
-// 					xbmc.Notify("Elementum", "Failed listing entities, check your logs.", config.AddonIcon())
+// 					xbmc.Notify("projectx", "Failed listing entities, check your logs.", config.AddonIcon())
 // 				} else if resp.Status() != 200 {
 // 					message := fmt.Sprintf("Bad status listing entities: %d", resp.Status())
 // 					log.Error(message)
-// 					xbmc.Notify("Elementum", message, config.AddonIcon())
+// 					xbmc.Notify("projectx", message, config.AddonIcon())
 // 				}
 
 // 				return nil

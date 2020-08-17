@@ -10,8 +10,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/elgatito/elementum/cache"
-	"github.com/elgatito/elementum/proxy"
+	"github.com/projectx13/projectx/cache"
+	"github.com/projectx13/projectx/proxy"
 )
 
 //go:generate msgp -o msgp.go -io=false -tests=false

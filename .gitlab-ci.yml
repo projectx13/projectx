@@ -40,9 +40,9 @@ before_script:
     - |
         mkdir -p build
         lftp -c "open 'ftp://$FTP_USER:$FTP_PASS@$FTP_HOST'; \
-        mkdir -p -f elementum-binaries/$CI_BUILD_REF_NAME; \
+        mkdir -p -f projectx-binaries/$CI_BUILD_REF_NAME; \
         lcd build; \
-        cd elementum-binaries/$CI_BUILD_REF_NAME; \
+        cd projectx-binaries/$CI_BUILD_REF_NAME; \
         mirror --reverse --verbose --include-glob *; \
         exit;"
   only:

@@ -11,10 +11,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/elgatito/elementum/cache"
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/util"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/cache"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/util"
+	"github.com/projectx13/projectx/xbmc"
 	"github.com/jmcvetta/napping"
 	"github.com/op/go-logging"
 )
@@ -623,7 +623,7 @@ func GetWithAuth(endPoint string, params url.Values) (resp *napping.Response, er
 		} else if resp.Status() == 401 {
 			err = fmt.Errorf("Trakt access token is not valid, please, re-authorize Trakt")
 			log.Warning(err)
-			xbmc.Notify("Elementum", "LOCALIZE[30576]", config.AddonIcon())
+			xbmc.Notify("projectx", "LOCALIZE[30576]", config.AddonIcon())
 			return err
 		} else if resp.Status() == 429 {
 			log.Warningf("Rate limit exceeded getting %s, cooling down...", endPoint)
@@ -863,14 +863,14 @@ func TokenRefreshHandler() {
 			if time.Now().Unix() > int64(config.Get().TraktTokenExpiry)-int64(259200) {
 				resp, err := RefreshToken()
 				if err != nil {
-					xbmc.Notify("Elementum", err.Error(), config.AddonIcon())
+					xbmc.Notify("projectx", err.Error(), config.AddonIcon())
 					log.Error(err)
 					return
 				}
 
 				if resp.Status() == 200 {
 					if errUnm := resp.Unmarshal(&token); errUnm != nil {
-						xbmc.Notify("Elementum", errUnm.Error(), config.AddonIcon())
+						xbmc.Notify("projectx", errUnm.Error(), config.AddonIcon())
 						log.Error(errUnm)
 					} else {
 						expiry := time.Now().Unix() + int64(token.ExpiresIn)
@@ -881,7 +881,7 @@ func TokenRefreshHandler() {
 					}
 				} else {
 					err = fmt.Errorf("Bad status while refreshing Trakt token: %d", resp.Status())
-					xbmc.Notify("Elementum", err.Error(), config.AddonIcon())
+					xbmc.Notify("projectx", err.Error(), config.AddonIcon())
 					log.Error(err)
 				}
 			}
@@ -894,7 +894,7 @@ func Authorize(fromSettings bool) error {
 	code, err := GetCode()
 
 	if err != nil {
-		xbmc.Notify("Elementum", err.Error(), config.AddonIcon())
+		xbmc.Notify("projectx", err.Error(), config.AddonIcon())
 		return err
 	}
 	log.Noticef("Got code for %s: %s", code.VerificationURL, code.UserCode)
@@ -907,7 +907,7 @@ func Authorize(fromSettings bool) error {
 	log.Debugf("Received token: %#v", token)
 
 	if err != nil {
-		xbmc.Notify("Elementum", err.Error(), config.AddonIcon())
+		xbmc.Notify("projectx", err.Error(), config.AddonIcon())
 		return err
 	}
 
@@ -943,7 +943,7 @@ func Authorize(fromSettings bool) error {
 		}
 	}
 
-	xbmc.Notify("Elementum", success, config.AddonIcon())
+	xbmc.Notify("projectx", success, config.AddonIcon())
 	return nil
 }
 
@@ -1230,7 +1230,7 @@ func Scrobble(action string, contentType string, tmdbID int, watched float64, ru
 	resp, err := Post(endPoint, bytes.NewBufferString(payload))
 	if err != nil {
 		log.Error(err.Error())
-		xbmc.Notify("Elementum", "Scrobble failed, check your logs.", config.AddonIcon())
+		xbmc.Notify("projectx", "Scrobble failed, check your logs.", config.AddonIcon())
 	} else if resp.Status() != 201 {
 		log.Errorf("Failed to scrobble %s #%d to %s at %f: %d", contentType, tmdbID, action, progress, resp.Status())
 	}

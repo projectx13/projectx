@@ -1,6 +1,6 @@
 package bittorrent
 
-import lt "github.com/ElementumOrg/libtorrent-go"
+import lt "github.com/projectxorg/libtorrent-go"
 
 type ltAlert struct {
 	lt.Alert

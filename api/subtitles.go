@@ -5,12 +5,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/elgatito/elementum/bittorrent"
+	"github.com/projectx13/projectx/bittorrent"
 
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/osdb"
-	"github.com/elgatito/elementum/util"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/osdb"
+	"github.com/projectx13/projectx/util"
+	"github.com/projectx13/projectx/xbmc"
 	"github.com/gin-gonic/gin"
 	"github.com/op/go-logging"
 )
@@ -24,7 +24,7 @@ func SubtitlesIndex(s *bittorrent.Service) gin.HandlerFunc {
 
 		playingFile := xbmc.PlayerGetPlayingFile()
 
-		// Check if we are reading a file from Elementum
+		// Check if we are reading a file from projectx
 		if strings.HasPrefix(playingFile, util.GetContextHTTPHost(ctx)) {
 			playingFile = strings.Replace(playingFile, util.GetContextHTTPHost(ctx)+"/files", config.Get().DownloadPath, 1)
 			playingFile, _ = url.QueryUnescape(playingFile)

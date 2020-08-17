@@ -5,9 +5,9 @@ import (
 	"encoding/base32"
 	"fmt"
 
-	"github.com/ElementumOrg/libtorrent-go"
+	"github.com/projectxorg/libtorrent-go"
 
-	"github.com/elgatito/elementum/config"
+	"github.com/projectx13/projectx/config"
 )
 
 var (
@@ -32,7 +32,7 @@ func GetTorrentVersion() string {
 
 // DefaultUserAgent ...
 func DefaultUserAgent() string {
-	return fmt.Sprintf("Elementum/%s", GetVersion())
+	return fmt.Sprintf("projectx/%s", GetVersion())
 }
 
 // DefaultPeerID return default PeerID

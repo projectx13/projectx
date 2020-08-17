@@ -11,11 +11,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/op/go-logging"
 
-	"github.com/elgatito/elementum/bittorrent"
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/database"
-	"github.com/elgatito/elementum/providers"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/bittorrent"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/database"
+	"github.com/projectx13/projectx/providers"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 var searchLog = logging.MustGetLogger("search")
@@ -40,7 +40,7 @@ func Search(s *bittorrent.Service) gin.HandlerFunc {
 
 		fakeTmdbID := strconv.Itoa(int(xxhash.Sum64String(query)))
 		existingTorrent := s.HasTorrentByQuery(query)
-		if existingTorrent != nil && (config.Get().SilentStreamStart || (existingTorrent.IsNextFile && config.Get().SmartEpisodeChoose) || xbmc.DialogConfirmFocused("Elementum", fmt.Sprintf("LOCALIZE[30608];;[COLOR gold]%s[/COLOR]", existingTorrent.Title()))) {
+		if existingTorrent != nil && (config.Get().SilentStreamStart || (existingTorrent.IsNextFile && config.Get().SmartEpisodeChoose) || xbmc.DialogConfirmFocused("projectx", fmt.Sprintf("LOCALIZE[30608];;[COLOR gold]%s[/COLOR]", existingTorrent.Title()))) {
 			xbmc.PlayURLWithTimeout(URLQuery(
 				URLForXBMC("/play"),
 				"resume", existingTorrent.InfoHash(),
@@ -72,7 +72,7 @@ func Search(s *bittorrent.Service) gin.HandlerFunc {
 		}
 
 		if len(torrents) == 0 {
-			xbmc.Notify("Elementum", "LOCALIZE[30205]", config.AddonIcon())
+			xbmc.Notify("projectx", "LOCALIZE[30205]", config.AddonIcon())
 			return
 		}
 

@@ -15,23 +15,23 @@ import (
 	"sync"
 	"time"
 
-	lt "github.com/ElementumOrg/libtorrent-go"
+	lt "github.com/projectxorg/libtorrent-go"
 	"github.com/anacrolix/missinggo/perf"
 	"github.com/cespare/xxhash"
 	"github.com/dustin/go-humanize"
 	"github.com/sanity-io/litter"
 
-	"github.com/elgatito/elementum/broadcast"
-	"github.com/elgatito/elementum/config"
-	"github.com/elgatito/elementum/database"
-	"github.com/elgatito/elementum/diskusage"
-	"github.com/elgatito/elementum/library"
-	"github.com/elgatito/elementum/osdb"
-	"github.com/elgatito/elementum/tmdb"
-	"github.com/elgatito/elementum/trakt"
-	"github.com/elgatito/elementum/tvdb"
-	"github.com/elgatito/elementum/util"
-	"github.com/elgatito/elementum/xbmc"
+	"github.com/projectx13/projectx/broadcast"
+	"github.com/projectx13/projectx/config"
+	"github.com/projectx13/projectx/database"
+	"github.com/projectx13/projectx/diskusage"
+	"github.com/projectx13/projectx/library"
+	"github.com/projectx13/projectx/osdb"
+	"github.com/projectx13/projectx/tmdb"
+	"github.com/projectx13/projectx/trakt"
+	"github.com/projectx13/projectx/tvdb"
+	"github.com/projectx13/projectx/util"
+	"github.com/projectx13/projectx/xbmc"
 )
 
 const (
@@ -238,7 +238,7 @@ func (btp *Player) Buffer() error {
 	defer close(done)
 
 	if !btp.t.IsBufferingFinished {
-		btp.dialogProgress = xbmc.NewDialogProgress("Elementum", "", "", "")
+		btp.dialogProgress = xbmc.NewDialogProgress("projectx", "", "", "")
 		defer btp.dialogProgress.Close()
 	}
 
@@ -303,7 +303,7 @@ func (btp *Player) processMetadata() {
 
 	btp.FetchStoredResume()
 	if btp.p.StoredResume != nil && btp.p.StoredResume.Position > 0 && !btp.p.Background {
-		if !config.Get().StoreResume || config.Get().StoreResumeAction == 0 || !(config.Get().SilentStreamStart || config.Get().StoreResumeAction == 2 || xbmc.DialogConfirmFocused("Elementum", fmt.Sprintf("LOCALIZE[30535];;%s", btp.p.StoredResume.ToString()))) {
+		if !config.Get().StoreResume || config.Get().StoreResumeAction == 0 || !(config.Get().SilentStreamStart || config.Get().StoreResumeAction == 2 || xbmc.DialogConfirmFocused("projectx", fmt.Sprintf("LOCALIZE[30535];;%s", btp.p.StoredResume.ToString()))) {
 			log.Infof("Resetting stored resume")
 			btp.p.StoredResume.Reset()
 			btp.SaveStoredResume()
@@ -555,7 +555,7 @@ func (btp *Player) updateBufferDialog() (bool, error) {
 			if err != nil {
 				log.Error(err)
 				btp.bufferEvents.Broadcast(err)
-				xbmc.Notify("Elementum", "LOCALIZE[30304]", config.AddonIcon())
+				xbmc.Notify("projectx", "LOCALIZE[30304]", config.AddonIcon())
 				return false, err
 			}
 
@@ -570,7 +570,7 @@ func (btp *Player) updateBufferDialog() (bool, error) {
 			if err != nil {
 				log.Error(err)
 				btp.bufferEvents.Broadcast(err)
-				xbmc.Notify("Elementum", "LOCALIZE[30305]", config.AddonIcon())
+				xbmc.Notify("projectx", "LOCALIZE[30305]", config.AddonIcon())
 				return false, err
 			}
 
@@ -578,7 +578,7 @@ func (btp *Player) updateBufferDialog() (bool, error) {
 			if err != nil {
 				log.Error(err)
 				btp.bufferEvents.Broadcast(err)
-				xbmc.Notify("Elementum", "LOCALIZE[30306]", config.AddonIcon())
+				xbmc.Notify("projectx", "LOCALIZE[30306]", config.AddonIcon())
 				return false, err
 			}
 
@@ -610,7 +610,7 @@ func (btp *Player) findExtracted(destPath string) {
 	if err != nil {
 		log.Error(err)
 		btp.bufferEvents.Broadcast(err)
-		xbmc.Notify("Elementum", "LOCALIZE[30307]", config.AddonIcon())
+		xbmc.Notify("projectx", "LOCALIZE[30307]", config.AddonIcon())
 		return
 	}
 	if len(files) == 1 {

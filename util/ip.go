@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/elgatito/elementum/config"
+	"github.com/projectx13/projectx/config"
 
 	"github.com/gin-gonic/gin"
 )
@@ -210,8 +210,8 @@ func isUDPPortUsed(network string, addr string) bool {
 	return true
 }
 
-// ElementumURL returns elementum url for external calls
-func ElementumURL() string {
+// projectxURL returns projectx url for external calls
+func projectxURL() string {
 	return GetHTTPHost()
 }
 
