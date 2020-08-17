@@ -20,7 +20,7 @@ before_script:
   script:
     - make pull
     - go get -d ./...
-    - go get -d github.com/elgatito/cross-compiler
+    - go get -d github.com/projectx13/cross-compiler
     - go tool vet -unsafeptr=false .
     - make libs
     - make $PLATFORM
@@ -32,7 +32,7 @@ before_script:
   script:
     - make pull
     - go get -d ./...
-    - go get -d github.com/elgatito/cross-compiler
+    - go get -d github.com/projectx13/cross-compiler
     - go tool vet -unsafeptr=false .
     - make libs
     - make $PLATFORM
