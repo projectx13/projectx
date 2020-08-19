@@ -208,7 +208,7 @@ func getAddons(user string, repository string) (*xbmc.AddonList, error) {
 	var addons []xbmc.Addon
 
 	for _, repo := range []string{"plugin.video.projectx", "script.projectx.burst", "context.projectx"} {
-		addonXML, err := getAddonXML("elgatito", repo)
+		addonXML, err := getAddonXML("projectx13", repo)
 		if err != nil {
 			continue
 		}

@@ -44,12 +44,12 @@ func MakeprojectxRepositoryAddon() error {
 				Point: "xbmc.addon.repository",
 				Name:  addonName,
 				Info: &xbmc.AddonRepositoryInfo{
-					Text:       projectxHost + "/repository/elgatito/plugin.video.projectx/addons.xml",
+					Text:       projectxHost + "/repository/projectx13/plugin.video.projectx/addons.xml",
 					Compressed: false,
 				},
-				Checksum: projectxHost + "/repository/elgatito/plugin.video.projectx/addons.xml.md5",
+				Checksum: projectxHost + "/repository/projectx13/plugin.video.projectx/addons.xml.md5",
 				Datadir: &xbmc.AddonRepositoryDataDir{
-					Text: projectxHost + "/repository/elgatito/",
+					Text: projectxHost + "/repository/projectx13/",
 					Zip:  true,
 				},
 			},
